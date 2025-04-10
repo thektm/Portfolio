@@ -1,6 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+// Define the types for education and experience items
+interface EducationItem {
+  title: string;
+  location: string;
+  period: string;
+}
+
+interface ExperienceItem {
+  title: string;
+  location: string;
+  period: string;
+}
+
+// Define the combined item type
+interface CombinedItem extends EducationItem, ExperienceItem {
+  type: 'education' | 'experience';
+}
 // Education and experience data
 const educationData = [
   {
@@ -38,8 +55,13 @@ const experienceData = [
   },
 ];
 
-// Combine and alternate data
-const combinedData = [];
+// Simple approach with type annotation
+const combinedData: Array<{
+  type: 'education' | 'experience';
+  title: string;
+  location: string;
+  period: string;
+}> = [];
 const maxLength = Math.max(educationData.length, experienceData.length);
 for (let i = 0; i < maxLength; i++) {
   if (i < educationData.length) {
@@ -57,8 +79,8 @@ for (let i = 0; i < maxLength; i++) {
 }
 
 export const Qualification = () => {
-  const sectionRef = useRef(null);
-  const lineRef = useRef(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const lineRef = useRef<HTMLDivElement | null>(null);
 
   // Get the scroll progress for this section
   const { scrollYProgress } = useScroll({
