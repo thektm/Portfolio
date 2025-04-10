@@ -1,0 +1,24 @@
+/* Add these to your existing CSS */
+.perspective-500 {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    position: relative;
+  }
+  
+  .letter-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    filter: blur(4px);
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }

@@ -1,8 +1,45 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'poppins';
+  src: url('../public/Poppins-Medium.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  
+}
+@font-face {
+  font-family: 'gildeon';
+  src: url('../public/Gildeon.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  
+}
+@font-face {
+  font-family: 'gelline';
+  src: url('../public/Gelline.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  overflow-y: scroll; /* Prevent content shift when hiding scrollbar */
+}
+
+/* Optional: Apply smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
 }
 
 @theme inline {
@@ -10,15 +47,14 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-gildeon : 'gildeon';
+  --font-gelline : 'gelline';
+  --font-poppins : 'poppins';
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme dark {
+  --background: #171717;
+  --foreground: #ffffff;
 }
-
 body {
   background: var(--background);
   color: var(--foreground);
