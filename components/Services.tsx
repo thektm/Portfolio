@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
+"use client";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { div } from "framer-motion/client";
 
 const serviceData = [
   {
@@ -178,31 +178,40 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  // Prevent unnecessary renders when service is null
+  if (!service && !isOpen) return null;
   return (
-    <div>
+    <AnimatePresence>
       {isOpen && (
         <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
           onClick={onClose}
         >
           <motion.div
-            className="relative bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-auto shadow-2xl"
-            initial={{ scale: 0.9, y: 20, opacity: 0 }}
+            className="relative bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-auto shadow-2xl will-change-transform"
+            initial={{ scale: 0.95, y: 10, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            exit={{ scale: 0.95, y: 10, opacity: 0 }}
+            transition={{
+              type: "tween",
+              duration: 0.2,
+              ease: "easeOut",
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal header with close button */}
             <div className="sticky top-0 bg-white px-6 py-4 border-b border-gray-100 flex justify-between items-center z-10">
               <h3 className="text-2xl font-bold text-black">
-                {service.modalContent.title}
+                {service?.modalContent?.title}
               </h3>
               <button
                 onClick={onClose}
                 className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-              >
+              >{}
                 <svg
                   width="20"
                   height="20"
@@ -224,25 +233,27 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
             {/* Modal content */}
             <div className="p-6">
               <p className="text-gray-700 mb-6">
-                {service.modalContent.description}
+                {service?.modalContent?.description}
               </p>
 
               <h4 className="text-lg font-semibold mb-3 text-black">
                 Services Offered:
               </h4>
               <ul className="space-y-2">
-                {service.modalContent.services.map((item: any, index: any) => (
-                  <motion.li
-                    key={index}
-                    className="flex items-start"
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 * index }}
-                  >
-                    <span className="mr-2 mt-1 text-black">•</span>
-                    <span className="text-gray-700">{item}</span>
-                  </motion.li>
-                ))}
+                {service?.modalContent?.services.map(
+                  (item: any, index: any) => (
+                    <motion.li
+                      key={index}
+                      className="flex items-start"
+                      initial={{ opacity: 0, x: -5 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.05 * index, duration: 0.2 }}
+                    >
+                      <span className="mr-2 mt-1 text-black">•</span>
+                      <span className="text-gray-700">{item}</span>
+                    </motion.li>
+                  )
+                )}
               </ul>
 
               {/* Contact button */}
@@ -256,7 +267,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
               </div>
             </div>
 
-            {/* Decorative elements */}
+            {/* Simplified decorative elements */}
             <div className="absolute top-0 right-0 w-32 h-32 opacity-[0.03] pointer-events-none">
               <svg
                 width="100%"
@@ -266,7 +277,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M0 0L100 100M20 0L100 80M40 0L100 60M60 0L100 40M80 0L100 20"
+                  d="M0 0L100 100M40 0L100 60M80 0L100 20"
                   stroke="black"
                   strokeWidth="1"
                 />
@@ -275,7 +286,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
           </motion.div>
         </motion.div>
       )}
-    </div>
+    </AnimatePresence>
   );
 };
 
@@ -284,14 +295,29 @@ export const Services = () => {
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
   const [selectedService, setSelectedService] = useState(null);
 
+  // Add this to prevent body scrolling when modal is open
+  useEffect(() => {
+    if (selectedService !== null) {
+      // Prevent body scrolling when modal is open
+      document.body.style.overflow = "hidden";
+    } else {
+      // Restore scrolling when modal is closed
+      document.body.style.overflow = "auto";
+    }
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [selectedService]);
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
       },
     },
   };
@@ -323,6 +349,7 @@ export const Services = () => {
   return (
     <section
       ref={sectionRef}
+      id="services"
       className="py- px-4 md:px-8 w-full bg-white relative overflow-hidden"
     >
       {/* Background decorative elements */}

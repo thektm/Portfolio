@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useGSAP } from "@gsap/react";
@@ -109,8 +109,8 @@ const AnimatedTextCard: React.FC = () => {
         ))}
       </div>
 
-            {/* Main text - responsive layout */}
-            <div
+      {/* Main text - responsive layout */}
+      <div
         ref={textRef}
         className="text-black font-gelline md:text-7xl text-6xl tracking-wider uppercase m-2 text-center flex flex-col md:block md:space-x-4"
       >
@@ -132,7 +132,7 @@ const AnimatedTextCard: React.FC = () => {
             </span>
           ))}
         </div>
-        
+
         {/* Second line - "choose" */}
         <div className="block md:inline -mt-2 md:mt-0">
           {textSecondLine.split("").map((letter, index) => (
@@ -149,7 +149,7 @@ const AnimatedTextCard: React.FC = () => {
             </span>
           ))}
         </div>
-        
+
         {/* Third line - "programming" */}
         <div className="block md:inline -mt-2 md:mt-0">
           {textThirdLine.split("").map((letter, index) => (
@@ -209,7 +209,6 @@ const AnimatedTextCard: React.FC = () => {
           className="absolute text-xs md:text-sm font-gelline opacity-10 text-black"
           style={{
             left: `${15 + i * 20}%`,
-            
           }}
           animate={{
             y: [0, -15, 0],

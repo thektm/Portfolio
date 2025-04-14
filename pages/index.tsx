@@ -9,6 +9,8 @@ import { About } from "@/components/About";
 import Skills from "@/components/Skills";
 import { Services } from "@/components/Services";
 import { Qualification } from "@/components/Qualification";
+import { Contact } from "@/components/Contact";
+import { Footer } from "@/components/Footer";
 export default function Home() {
   return (
     <ReactLenis root>
@@ -16,11 +18,13 @@ export default function Home() {
       <Navbar />
       <Hero />
       <About />
-      <AnimatedTextCard />
+     <AnimatedTextCard />
       <SCrollSlider />
       <Skills />
       <Services />
       <Qualification />
+      <Contact />
+      <Footer/>
     </ReactLenis>
   );
 }

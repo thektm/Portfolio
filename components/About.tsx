@@ -190,7 +190,10 @@ export const About = () => {
   }, [inView, controls]);
 
   return (
-    <section className="w-full px-4 md:px-8 lg:px-16 bg-white relative z-0 overflow-hidden">
+    <section
+      className="w-full px-4 md:px-8 lg:px-16 bg-white relative z-0 overflow-hidden -mt-10"
+      id="about"
+    >
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
         <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full"></div>
@@ -256,7 +259,7 @@ export const About = () => {
           {/* Info Section */}
           <motion.div
             ref={infoRef}
-            className="w-full lg:w-7/12"
+            className="w-full lg:w-7/12 min-h-[400px]" // Added min-height to ensure enough space
             initial="hidden"
             animate={infoInView ? "visible" : "hidden"}
             variants={staggerItems}
@@ -297,11 +300,103 @@ export const About = () => {
 
             {/* Download CV Button */}
             <motion.div
-              className="flex justify-center sm:justify-start"
+              className="flex md:justify-center justify-start"
               variants={fadeIn}
               custom={0.8}
               style={{ willChange: "opacity, transform" }}
-            ></motion.div>
+            >
+              <div className="relative group">
+                {/* Animated background glow effect */}
+                <div
+                  className="absolute -inset-1 bg-gradient-to-r from-gray-600 via-gray-900 to-black rounded-lg blur-md opacity-0 
+                  focus-within:opacity-70 transition-all duration-500 group-focus-within:duration-200"
+                ></div>
+
+                <button
+                  className="relative z-10 md:px-7 px-3 py-3.5 bg-gradient-to-br from-gray-800 to-black text-white font-medium rounded-lg shadow-lg 
+                  flex items-center gap-3 overflow-hidden transition-all duration-300 border border-gray-700 focus:outline-none"
+                  onClick={(e) => e.currentTarget.focus()} // Ensure focus on click
+                >
+                  <span className="relative z-10 text-base tracking-wide">
+                    Download CV
+                  </span>
+                  <div className="relative z-10 p-1.5 bg-white/10 rounded-full group-focus-within:bg-white/20 transition-all duration-300">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 group-focus-within:translate-y-0.5 transition-transform duration-300"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                      />
+                    </svg>
+                  </div>
+
+                  {/* Animated shine effect */}
+                  <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-focus-within:animate-shine"></div>
+                </button>
+
+                {/* Language selection - now appearing as a horizontal row to the right */}
+                <div
+                  className="absolute left-full ml-1 top-0 opacity-0 translate-x-2 invisible group-focus-within:opacity-100
+                  group-focus-within:visible group-focus-within:translate-x-0 transition-all duration-300 z-5 flex items-center"
+                >
+                  {/* Decorative connector */}
+                  <div className="absolute top-1/2 -left-2 w-2 h-0.5 bg-gray-300 transform -translate-y-1/2"></div>
+
+                  {/* English CV button */}
+                  <a
+                    href="/CvEN.pdf"
+                    download
+                    className="flex items-center justify-center bg-white rounded-lg shadow-md border border-gray-200 px-4 py-3 hover:bg-gray-50 transition-all duration-200 mr-2 group/item"
+                  >
+                    <span className="text-gray-800 font-medium">EN</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 text-gray-500 ml-2 group-hover/item:text-gray-800 transition-colors"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                      />
+                    </svg>
+                  </a>
+
+                  {/* Farsi CV button */}
+                  <a
+                    href="/CvFA.pdf"
+                    download
+                    className="flex items-center justify-center bg-white rounded-lg shadow-md border border-gray-200 px-4 py-3 hover:bg-gray-50 transition-all duration-200 group/item"
+                  >
+                    <span className="text-gray-800 font-medium">FA</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 text-gray-500 ml-2 group-hover/item:text-gray-800 transition-colors"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

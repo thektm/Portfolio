@@ -106,7 +106,8 @@ export const Qualification = () => {
   }, [scrollYProgress]);
 
   return (
-    <section ref={sectionRef} className="w-full py-16 px-4 md:px-8 bg-white">
+    <section ref={sectionRef} className="w-full py-16 px-4 md:px-8 bg-white"
+    id="qualify">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">

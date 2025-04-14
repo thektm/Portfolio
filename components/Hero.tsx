@@ -82,8 +82,6 @@ const ScrollIndicator: React.FC<ScrollIndicatorProps> = ({
   );
 };
 
-// Removed canvas interfaces since they're not used in the provided code
-
 const Hero: React.FC = () => {
   const willChange = useWillChange();
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -117,23 +115,44 @@ const Hero: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1, ease: "easeOut" }}
-      className="box-border relative w-full md:w-[90%] lg:w-[80%] h-screen mx-auto"
+      className="box-border relative w-full md:w-[90%] lg:w-[80%] h-[100vh] mx-auto"
       style={{ willChange }}
+      id="home"
     >
-      {/* Social Icons - Removed will-change from className */}
+      {/* Social Icons - Updated for consistent mobile/desktop experience */}
       <motion.div
-        className="absolute left-0 md:top-[40%] top-[10%] ml-2 md:ml-0 scale-90 md:scale-100 w-[8%] flex flex-col items-center"
+        className="absolute left-0 md:top-[40%] top-[10%] ml-2 md:ml-0 scale-90 md:scale-100 w-[8%] flex flex-col items-center z-10"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
       >
-        <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
+        {/* Instagram */}
+        <motion.a 
+          href="https://instagram.com/nevertrusteyes"
+          whileHover={{ scale: 1.2 }} 
+          whileTap={{ scale: 0.9 }}
+          className="social-icon-container"
+        >
           <Instagram size={30} color="black" className="cursor-pointer m-4" />
-        </motion.div>
-        <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
+        </motion.a>
+
+        {/* GitHub */}
+        <motion.a 
+          href="https://github.com/thektm"
+          whileHover={{ scale: 1.2 }} 
+          whileTap={{ scale: 0.9 }}
+          className="social-icon-container"
+        >
           <Github size={30} color="black" className="cursor-pointer m-4" />
-        </motion.div>
-        <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
+        </motion.a>
+
+        {/* WhatsApp */}
+        <motion.a 
+          href="https://wa.me/+989335301755"
+          whileHover={{ scale: 1.2 }} 
+          whileTap={{ scale: 0.9 }}
+          className="social-icon-container"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -144,11 +163,11 @@ const Hero: React.FC = () => {
               d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28"
             />
           </svg>
-        </motion.div>
+        </motion.a>
       </motion.div>
 
       {/* Main Content Area - Removed will-change from className */}
-      <div className="absolute top-0 left-0 w-full h-[90%] flex flex-col items-center sm:flex-row sm:top-[20%] sm:left-auto sm:right-0 sm:w-[85%] sm:h-[60%]">
+      <div className="absolute top-0 left-0 w-full h-[90%] flex flex-col items-center sm:flex-row sm:top-[15%] sm:left-auto sm:right-0 sm:w-[85%] sm:h-[60%]">
         {/* Image Block */}
         <motion.div
           initial={
@@ -218,6 +237,21 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.3, delay: 4.3, ease: "easeOut" }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              const contactSection = document.getElementById("contact");
+              if (contactSection) {
+                const navbarHeight = 64; // Same as in your Navbar component
+                const elementPosition =
+                  contactSection.getBoundingClientRect().top;
+                const offsetPosition =
+                  elementPosition + window.pageYOffset - navbarHeight;
+
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth",
+                });
+              }
+            }}
             className="relative inline-flex self-start h-12 mt-[8%] md:mt-[12%] overflow-hidden rounded-xl  sm:mt-[10%] ml-2 sm:ml-0 p-[2px] focus:outline-none"
           >
             <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#FFFFFF_50%,#000000_100%)]" />
